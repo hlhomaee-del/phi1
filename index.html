@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CBCS HIPAA & Compliance Mastery Lab — Part 1</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,600&display=swap');
+
+:root{
+  --ink:#1C1C3A;
+  --sky:#1565C0;--sky-l:#E3F2FD;--sky-m:#64B5F6;
+  --mint:#00695C;--mint-l:#E0F2F1;--mint-m:#4DB6AC;
+  --gold:#E65100;--gold-l:#FFF3E0;--gold-m:#FFA726;
+  --rose:#B71C1C;--rose-l:#FFEBEE;--rose-m:#EF5350;
+  --plum:#4A148C;--plum-l:#F3E5F5;--plum-m:#CE93D8;
+  --lime:#558B2F;--lime-l:#F1F8E9;
+  --slate:#546E7A;--slate-l:#ECEFF1;
+  --bg:#F5F7FC;--bg2:#ECEEF5;--white:#fff;
+  --sh:0 2px 10px rgba(0,0,0,.08);
+  --sh2:0 6px 24px rgba(0,0,0,.12);
+  --sh3:0 12px 44px rgba(0,0,0,.16);
+  --r:16px;--rs:10px;--rl:24px;
+  --f:'Nunito',sans-serif;--fd:'Playfair Display',serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--f);background:var(--bg);color:var(--ink);min-height:100vh;font-size:15px;line-height:1.65;}
+
+/* ── TOPBAR ── */
+.topbar{background:linear-gradient(135deg,#0D47A1 0%,#1565C0 40%,#4A148C 100%);color:#fff;position:sticky;top:0;z-index:300;box-shadow:var(--sh3);}
+.tb-inner{max-width:1140px;margin:0 auto;padding:10px 18px 0;}
+.tb-row1{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:5px;}
+.tb-title{font-family:var(--fd);font-size:1rem;font-style:italic;}
+.tb-title b{font-style:normal;color:#90CAF9;}
+.part-badge{background:rgba(255,255,255,.22);border-radius:20px;padding:2px 11px;font-size:.63rem;font-weight:800;letter-spacing:.06em;}
+.tb-pts{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap;}
+.pt{background:rgba(255,255,255,.15);border-radius:20px;padding:3px 12px;font-size:.7rem;font-weight:700;}
+.pt b{color:#FFE082;}
+.nav-scroll{overflow-x:auto;scrollbar-width:none;}
+.nav-scroll::-webkit-scrollbar{display:none;}
+.nav{display:flex;gap:3px;padding-top:4px;}
+.ntab{background:rgba(255,255,255,.10);border:none;color:rgba(255,255,255,.72);padding:8px 14px;cursor:pointer;font-size:.67rem;font-weight:800;white-space:nowrap;border-radius:8px 8px 0 0;font-family:var(--f);transition:all .2s;letter-spacing:.02em;}
+.ntab:hover{background:rgba(255,255,255,.22);color:#fff;}
+.ntab.on{background:#fff;color:#1A237E;}
+
+/* ── PANELS ── */
+.page{max-width:1100px;margin:0 auto;padding:26px 18px 70px;}
+.panel{display:none;animation:fadeUp .3s ease;}
+.panel.on{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── HERO ── */
+.hero{border-radius:var(--rl);padding:36px 32px;color:#fff;margin-bottom:22px;position:relative;overflow:hidden;}
+.hero-hipaa{background:linear-gradient(135deg,#0D47A1,#1565C0 45%,#4A148C);}
+.hero::after{content:'';position:absolute;top:-50px;right:-50px;width:220px;height:220px;background:rgba(255,255,255,.04);border-radius:50%;}
+.hero-eye{font-size:.67rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;opacity:.72;margin-bottom:6px;}
+.hero-h{font-family:var(--fd);font-size:1.75rem;line-height:1.2;margin-bottom:9px;}
+.hero-h span{color:#90CAF9;font-style:italic;}
+.hero-p{font-size:.86rem;opacity:.87;max-width:560px;line-height:1.65;}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
+
+/* ── EYEBROW / HEADS ── */
+.eyebrow{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--sky);margin-bottom:3px;}
+h2.sh{font-family:var(--fd);font-size:1.35rem;color:var(--ink);margin-bottom:5px;}
+p.sp{font-size:.84rem;color:var(--slate);margin-bottom:16px;line-height:1.65;}
+.divider{height:2px;background:linear-gradient(90deg,var(--sky-l),var(--plum-l),var(--mint-l));border-radius:2px;margin:22px 0;}
+
+/* ── DIRECTION BOX ── */
+.dir{background:linear-gradient(135deg,#E8EAF6,#E3F2FD);border-left:5px solid var(--sky);border-radius:var(--r);padding:15px 20px;margin-bottom:18px;}
+.dir h3{color:var(--sky);font-size:.88rem;font-weight:800;margin-bottom:7px;display:flex;align-items:center;gap:7px;}
+.dir ul{list-style:none;padding:0;}
+.dir li{font-size:.81rem;color:#37474F;padding:3px 0 3px 18px;position:relative;}
+.dir li::before{content:"▸";position:absolute;left:0;color:var(--sky);font-size:.68rem;top:5px;}
+
+/* ── TEACH CARD ── */
+.teach{background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:20px 22px;margin-bottom:12px;}
+.teach.t-sky{border-left:5px solid var(--sky);}
+.teach.t-mint{border-left:5px solid var(--mint);}
+.teach.t-gold{border-left:5px solid var(--gold);}
+.teach.t-rose{border-left:5px solid var(--rose);}
+.teach.t-plum{border-left:5px solid var(--plum);}
+.teach-lbl{font-size:.63rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px;}
+.teach.t-sky .teach-lbl{color:var(--sky);}
+.teach.t-mint .teach-lbl{color:var(--mint);}
+.teach.t-gold .teach-lbl{color:var(--gold);}
+.teach.t-rose .teach-lbl{color:var(--rose);}
+.teach.t-plum .teach-lbl{color:var(--plum);}
+.teach h3{font-size:.97rem;font-weight:800;color:var(--ink);margin-bottom:7px;}
+.teach p,.teach li{font-size:.83rem;line-height:1.7;color:var(--slate);}
+.teach ul{padding-left:16px;margin-top:5px;}
+.teach li{margin-bottom:3px;}
+
+/* ── CHECK-IN BOX ── */
+.checkin{background:linear-gradient(135deg,#EDE7F6,#E8EAF6);border-radius:var(--r);padding:16px 18px;margin:10px 0 20px;}
+.ci-lbl{font-size:.63rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--plum);display:flex;align-items:center;gap:5px;margin-bottom:10px;}
+.ci-lbl::before{content:'⬡';font-size:.85rem;}
+
+/* ── QUIZ BLOCK ── */
+.qblock{background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:18px 20px;margin-bottom:12px;}
+.q-meta{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--plum);margin-bottom:5px;display:flex;align-items:center;gap:6px;}
+.q-pts{background:var(--plum-l);color:var(--plum);border-radius:10px;padding:1px 8px;font-size:.65rem;}
+.q-text{font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.5;margin-bottom:12px;}
+.q-opts{display:flex;flex-direction:column;gap:7px;}
+.q-opt{background:var(--bg);border:2px solid var(--bg2);border-radius:var(--rs);padding:10px 14px;cursor:pointer;font-size:.82rem;font-family:var(--f);text-align:left;transition:all .22s;color:var(--ink);line-height:1.4;font-weight:600;}
+.q-opt:hover:not([disabled]){background:var(--sky-l);border-color:var(--sky-m);color:var(--sky);}
+.q-opt.ok{background:var(--mint-l);border-color:var(--mint-m);color:var(--mint);font-weight:700;}
+.q-opt.no{background:var(--rose-l);border-color:var(--rose-m);color:var(--rose);}
+.q-opt[disabled]{cursor:default;}
+.rat{display:none;margin-top:12px;border-radius:var(--rs);overflow:hidden;}
+.rat.show{display:block;animation:fadeUp .3s;}
+.rat-hd{padding:9px 14px;font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;display:flex;align-items:center;gap:7px;}
+.rat-hd.rh-ok{background:var(--mint);color:#fff;}
+.rat-hd.rh-no{background:var(--rose);color:#fff;}
+.rat-bd{background:#fff;border:1px solid var(--bg2);border-top:none;padding:12px 14px;font-size:.8rem;line-height:1.65;color:var(--slate);}
+.rat-clue{background:var(--sky-l);border-radius:var(--rs);padding:7px 11px;margin-top:7px;font-size:.76rem;color:var(--sky);font-weight:700;}
+.rat-trap{background:var(--gold-l);border-radius:var(--rs);padding:7px 11px;margin-top:7px;font-size:.76rem;color:var(--gold);font-weight:700;}
+
+/* ── TRUE/FALSE ── */
+.tf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:10px;margin:8px 0;}
+.tf-card{background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:15px 17px;}
+.tf-stmt{font-size:.84rem;font-weight:700;color:var(--ink);margin-bottom:10px;line-height:1.45;}
+.tf-btns{display:flex;gap:8px;}
+.tf-btn{flex:1;padding:8px;border:2px solid var(--bg2);border-radius:var(--rs);cursor:pointer;font-size:.79rem;font-weight:800;font-family:var(--f);transition:all .2s;background:#fff;}
+.tf-btn:hover:not([disabled]){border-color:var(--sky-m);}
+.tf-btn.tf-ok{background:var(--mint-l);border-color:var(--mint-m);color:var(--mint);}
+.tf-btn.tf-no{background:var(--rose-l);border-color:var(--rose-m);color:var(--rose);}
+.tf-btn[disabled]{cursor:default;}
+.tf-rev{font-size:.76rem;color:var(--slate);margin-top:7px;padding:7px 10px;background:var(--bg);border-radius:var(--rs);display:none;line-height:1.5;}
+.tf-rev.show{display:block;}
+
+/* ── FLIP CARDS ── */
+.flip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:12px 0;}
+.flip-wrap{height:165px;perspective:800px;cursor:pointer;}
+.flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s ease;border-radius:var(--r);}
+.flip-wrap.flipped .flip-inner{transform:rotateY(180deg);}
+.flip-f,.flip-b{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--r);padding:16px 14px;box-shadow:var(--sh);}
+.flip-f{background:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
+.flip-b{transform:rotateY(180deg);display:flex;flex-direction:column;justify-content:center;}
+.flip-icon{font-size:1.9rem;margin-bottom:6px;}
+.flip-label{font-size:.8rem;font-weight:800;color:var(--ink);}
+.flip-hint{font-size:.62rem;color:var(--slate);margin-top:5px;}
+.flip-b h4{font-size:.8rem;font-weight:800;margin-bottom:5px;}
+.flip-b p{font-size:.73rem;line-height:1.55;}
+
+/* ── SCENARIO BOX ── */
+.scenario{background:linear-gradient(135deg,#FFF8E1,#FFF3E0);border:2px solid #FFD54F;border-radius:var(--r);padding:13px 17px;margin:10px 0;}
+.sc-lbl{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:4px;}
+.sc-text{font-size:.85rem;color:var(--slate);font-style:italic;line-height:1.6;}
+
+/* ── PHI CLICK CARDS ── */
+.phi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:9px;margin:12px 0;}
+.phi-chip{background:#fff;border:2px solid var(--bg2);border-radius:var(--rs);padding:11px 10px;text-align:center;cursor:pointer;font-size:.78rem;font-weight:700;transition:all .25s;user-select:none;}
+.phi-chip:hover{transform:translateY(-2px);box-shadow:var(--sh2);}
+.phi-chip.phi-yes{background:var(--rose-l);border-color:var(--rose-m);color:var(--rose);}
+.phi-chip.phi-no{background:var(--mint-l);border-color:var(--mint-m);color:var(--mint);}
+.phi-chip.phi-pending{background:var(--gold-l);border-color:var(--gold-m);color:var(--gold);}
+.phi-result{margin-top:10px;font-size:.8rem;font-weight:700;min-height:22px;}
+
+/* ── SAFE vs UNSAFE ── */
+.safe-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;}
+.safe-col h4{font-size:.78rem;font-weight:800;padding:7px 12px;border-radius:var(--rs);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.safe-col.col-safe h4{background:var(--mint-l);color:var(--mint);}
+.safe-col.col-unsafe h4{background:var(--rose-l);color:var(--rose);}
+.safe-item{background:#fff;border-radius:var(--rs);padding:9px 12px;margin-bottom:7px;font-size:.79rem;line-height:1.5;box-shadow:var(--sh);border-left:3px solid transparent;}
+.col-safe .safe-item{border-left-color:var(--mint-m);}
+.col-unsafe .safe-item{border-left-color:var(--rose-m);}
+
+/* ── LAYER DIAGRAM ── */
+.layers{display:flex;flex-direction:column;gap:6px;margin:12px 0;}
+.layer{border-radius:var(--rs);padding:12px 16px;cursor:pointer;transition:all .22s;}
+.layer:hover{transform:translateX(4px);}
+.layer.l1{background:linear-gradient(135deg,#E3F2FD,#BBDEFB);border-left:5px solid var(--sky);}
+.layer.l2{background:linear-gradient(135deg,#E8F5E9,#C8E6C9);border-left:5px solid var(--mint);}
+.layer.l3{background:linear-gradient(135deg,#F3E5F5,#E1BEE7);border-left:5px solid var(--plum);}
+.layer.l4{background:linear-gradient(135deg,#FFF8E1,#FFE0B2);border-left:5px solid var(--gold);}
+.layer-head{font-size:.85rem;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px;}
+.layer-desc{font-size:.78rem;color:var(--slate);margin-top:4px;display:none;line-height:1.6;}
+.layer.open .layer-desc{display:block;}
+
+/* ── SAFEGUARD SORT ── */
+.chip-pool{display:flex;flex-wrap:wrap;gap:7px;padding:10px;background:var(--bg2);border-radius:var(--rs);margin-bottom:8px;}
+.chip{background:#fff;border:2px solid var(--bg2);border-radius:7px;padding:6px 12px;cursor:pointer;font-size:.76rem;font-weight:700;transition:all .2s;user-select:none;}
+.chip:hover{border-color:var(--sky-m);background:var(--sky-l);}
+.chip.sel{border-color:var(--sky);background:var(--sky-l);color:var(--sky);}
+.chip.chip-ok{border-color:var(--mint-m);background:var(--mint-l);color:var(--mint);cursor:default;}
+.chip.chip-no{border-color:var(--rose-m);background:var(--rose-l);color:var(--rose);}
+.sort-zones{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:10px;margin-top:8px;}
+.sort-zone{min-height:64px;padding:9px;background:#fff;border-radius:var(--rs);border:2px dashed var(--bg2);transition:all .2s;}
+.sz-lbl{font-size:.68rem;font-weight:800;text-transform:uppercase;margin-bottom:5px;}
+
+/* ── RELEASE CHECKLIST ── */
+.checklist-wrap{background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:18px 20px;margin:12px 0;}
+.cl-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--bg2);cursor:pointer;}
+.cl-item:last-child{border-bottom:none;}
+.cl-box{width:22px;height:22px;border-radius:5px;border:2px solid var(--bg2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:all .2s;}
+.cl-item.checked .cl-box{background:var(--mint);border-color:var(--mint);color:#fff;}
+.cl-text{font-size:.82rem;color:var(--slate);line-height:1.5;font-weight:600;}
+.cl-item.checked .cl-text{color:var(--mint);}
+.cl-item.missing .cl-box{background:var(--rose-l);border-color:var(--rose-m);}
+.cl-item.missing .cl-text{color:var(--rose);}
+
+/* ── BUTTONS ── */
+.btn{border:none;border-radius:var(--rs);padding:9px 20px;font-size:.82rem;font-weight:800;cursor:pointer;font-family:var(--f);transition:all .22s;letter-spacing:.02em;}
+.btn-sky{background:var(--sky);color:#fff;} .btn-sky:hover{background:#0D47A1;transform:translateY(-1px);}
+.btn-mint{background:var(--mint);color:#fff;} .btn-mint:hover{background:#004D40;}
+.btn-plum{background:var(--plum);color:#fff;} .btn-plum:hover{background:#38006b;}
+.btn-gold{background:var(--gold);color:#fff;} .btn-gold:hover{background:#BF360C;}
+.btn-ghost{background:#fff;border:2px solid var(--bg2);color:var(--slate);} .btn-ghost:hover{border-color:var(--sky-m);}
+.btn-lg{padding:12px 28px;font-size:.9rem;}
+.btn-sm{padding:6px 13px;font-size:.73rem;}
+
+/* ── BADGE ── */
+.badge-row{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0;}
+.badge{display:inline-flex;align-items:center;gap:4px;border-radius:20px;padding:4px 13px;font-size:.72rem;font-weight:800;box-shadow:var(--sh);}
+.badge-on{background:linear-gradient(135deg,#FFD54F,#FFB300);color:#5D4037;}
+.badge-off{background:var(--bg2);color:var(--slate);filter:grayscale(1);}
+
+/* ── PROGRESS ── */
+.prog-wrap{background:var(--bg2);border-radius:20px;height:9px;overflow:hidden;margin:6px 0;}
+.prog-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--sky-m),var(--sky));transition:width .5s ease;}
+
+/* ── ORIENT GRID ── */
+.orient-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0;}
+.oc{background:#fff;border-radius:var(--r);padding:14px;text-align:center;box-shadow:var(--sh);cursor:pointer;transition:all .22s;border-bottom:3px solid transparent;}
+.oc:hover{transform:translateY(-3px);box-shadow:var(--sh2);border-bottom-color:var(--sky);}
+.oc-icon{font-size:1.9rem;margin-bottom:5px;}
+.oc-lbl{font-size:.74rem;font-weight:800;color:var(--ink);}
+.oc-desc{font-size:.67rem;color:var(--slate);margin-top:2px;line-height:1.35;}
+
+/* ── ACCORDION ── */
+.acc{border:1px solid var(--bg2);border-radius:var(--r);overflow:hidden;margin-bottom:9px;}
+.acc-hdr{background:#fff;padding:13px 17px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:.84rem;border:none;width:100%;text-align:left;font-family:var(--f);transition:background .2s;}
+.acc-hdr:hover{background:var(--bg);}
+.acc-hdr.open{background:var(--sky-l);color:var(--sky);}
+.acc-arr{transition:transform .3s;} .acc-hdr.open .acc-arr{transform:rotate(180deg);}
+.acc-body{display:none;padding:14px 17px;background:#fff;border-top:1px solid var(--bg2);font-size:.82rem;line-height:1.7;color:var(--slate);}
+.acc-body.open{display:block;}
+
+/* ── TABLE ── */
+.tbl{width:100%;border-collapse:collapse;font-size:.79rem;border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);}
+.tbl th{background:var(--sky);color:#fff;padding:9px 13px;text-align:left;font-weight:800;}
+.tbl td{padding:8px 13px;border-bottom:1px solid var(--bg2);vertical-align:top;}
+.tbl tr:nth-child(even) td{background:var(--bg);}
+.tbl tr:hover td{background:var(--sky-l);}
+.ty{color:var(--mint);font-weight:700;} .tn{color:var(--rose-m);font-weight:700;} .tv{color:var(--gold);font-weight:700;}
+
+/* ── NOTIF ── */
+#notif{position:fixed;top:82px;right:18px;background:var(--mint);color:#fff;border-radius:var(--rs);padding:10px 16px;font-size:.8rem;font-weight:800;box-shadow:var(--sh3);z-index:999;transform:translateX(140%);transition:transform .3s ease;}
+#notif.show{transform:translateX(0);}
+#notif.bad{background:var(--rose);}
+
+/* ── MINI CHALLENGE ── */
+.mch-box{background:linear-gradient(135deg,#4A148C,#1565C0);border-radius:var(--rl);padding:24px 26px;color:#fff;text-align:center;margin:18px 0;}
+.mch-box h3{font-family:var(--fd);font-size:1.2rem;margin-bottom:6px;}
+.mch-box p{font-size:.84rem;opacity:.88;margin-bottom:16px;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:620px){
+  .safe-grid,.flip-grid{grid-template-columns:1fr;}
+  .hero-h{font-size:1.25rem;}
+  .sort-zones{grid-template-columns:1fr;}
+  .tf-grid{grid-template-columns:1fr;}
+}
+
+/* ── FOOTER ── */
+.footer{background:#1A237E;color:rgba(255,255,255,.65);text-align:center;padding:16px;font-size:.73rem;margin-top:40px;}
+.footer b{color:#fff;}
+
+/* ── HOVER GLOSSARY ── */
+.gl{border-bottom:2px dotted var(--sky-m);cursor:help;color:var(--sky);font-weight:700;position:relative;}
+.gl:hover::after{content:attr(data-def);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1A237E;color:#fff;padding:7px 12px;border-radius:9px;font-size:.72rem;white-space:normal;min-width:180px;max-width:260px;z-index:50;font-weight:600;line-height:1.5;box-shadow:var(--sh3);pointer-events:none;}
+</style>
+</head>
+<body>
+<div id="notif"></div>
+
+<!-- ══════════ TOPBAR ══════════ -->
+<div class="topbar">
+  <div class="tb-inner">
+    <div class="tb-row1">
+      <div class="tb-title"><b>CBCS HIPAA &amp; Compliance</b> Mastery Lab</div>
+      <span class="part-badge">PART 1 OF 2</span>
+      <div class="tb-pts">
+        <span class="pt">⭐ <b id="gScore">0</b> pts</span>
+        <span class="pt">✅ <b id="gCorrect">0</b> correct</span>
+        <span class="pt">🎯 <b id="gAcc">—</b></span>
+      </div>
+    </div>
+    <div class="nav-scroll">
+      <div class="nav">
+        <button class="ntab on" onclick="goTab(0)">🏠 Welcome</button>
+        <button class="ntab" onclick="goTab(1)">💡 HIPAA Made Simple</button>
+        <button class="ntab" onclick="goTab(2)">🔐 Privacy &amp; Security Rules</button>
+        <button class="ntab" onclick="goTab(3)">📋 Release of Information</button>
+        <button class="ntab" onclick="goTab(4)">⚡ Mini Challenge</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 0 — WELCOME
+══════════════════════════════════════════ -->
+<div id="tab0" class="panel on">
+<div class="page">
+
+  <div class="hero hero-hipaa">
+    <div class="hero-eye">NHA CBCS Exam Prep · Regulatory Compliance Domain · Part 1 of 2</div>
+    <div class="hero-h">Welcome to Your<br><span>HIPAA &amp; Compliance Mastery Lab</span></div>
+    <p class="hero-p">No instructor needed. Every concept is taught, then immediately tested. Learn by doing — not by reading endless text.</p>
+    <div class="hero-btns">
+      <button class="btn btn-sky btn-lg" onclick="goTab(1)">🚀 Start Learning HIPAA</button>
+      <button class="btn btn-ghost btn-lg" onclick="toggleAcc('how-acc')">📖 How This Lab Works</button>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-hdr" onclick="toggleAcc('how-acc')">📖 How to Use This Lab — Click to Expand <span class="acc-arr">▼</span></button>
+    <div class="acc-body" id="how-acc">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:10px;margin-top:4px;">
+        <div style="background:var(--sky-l);border-radius:var(--rs);padding:11px 13px;"><b style="color:var(--sky);font-size:.72rem;display:block;margin-bottom:3px;">📚 Learn a Concept</b><span style="font-size:.78rem;color:var(--slate);">Each section teaches one HIPAA idea — short, visual, and focused.</span></div>
+        <div style="background:var(--plum-l);border-radius:var(--rs);padding:11px 13px;"><b style="color:var(--plum);font-size:.72rem;display:block;margin-bottom:3px;">⬡ Instant Check-In</b><span style="font-size:.78rem;color:var(--slate);">Right after each concept, answer a question about it. No waiting.</span></div>
+        <div style="background:var(--mint-l);border-radius:var(--rs);padding:11px 13px;"><b style="color:var(--mint);font-size:.72rem;display:block;margin-bottom:3px;">✅ See Rationale</b><span style="font-size:.78rem;color:var(--slate);">Green = correct. Red = wrong. Every answer includes an explanation.</span></div>
+        <div style="background:var(--gold-l);border-radius:var(--rs);padding:11px 13px;"><b style="color:var(--gold);font-size:.72rem;display:block;margin-bottom:3px;">⭐ Earn Points</b><span style="font-size:.78rem;color:var(--slate);">+10 pts for correct answers. Score tracks at the top of the screen.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="eyebrow">Regulatory Compliance Domain</div>
+  <h2 class="sh">What's on the CBCS Exam?</h2>
+  <p class="sp">Regulatory Compliance is 21% of the CBCS exam — 19 scored questions. Here's what this lab covers:</p>
+
+  <div style="background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:18px 20px;margin-bottom:16px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;">
+      <div style="border-left:4px solid var(--sky);padding-left:12px;">
+        <div style="font-size:.75rem;font-weight:800;color:var(--sky);margin-bottom:4px;">📋 Part 1 (This File)</div>
+        <ul style="font-size:.79rem;color:var(--slate);line-height:1.7;list-style:none;padding:0;">
+          <li>✦ What HIPAA is &amp; why it matters</li>
+          <li>✦ What PHI means (with examples)</li>
+          <li>✦ Privacy Rule vs Security Rule</li>
+          <li>✦ Administrative, Physical &amp; Technical Safeguards</li>
+          <li>✦ Release of Information requirements</li>
+          <li>✦ Mini Challenge (20 Qs, timed)</li>
+        </ul>
+      </div>
+      <div style="border-left:4px solid var(--plum);padding-left:12px;">
+        <div style="font-size:.75rem;font-weight:800;color:var(--plum);margin-bottom:4px;">🎯 Part 2</div>
+        <ul style="font-size:.79rem;color:var(--slate);line-height:1.7;list-style:none;padding:0;">
+          <li>✦ Consent vs Authorization</li>
+          <li>✦ Informed vs Implied Consent</li>
+          <li>✦ Use vs Disclosure</li>
+          <li>✦ Training, Auditing &amp; Monitoring</li>
+          <li>✦ 40+ NHA-Style Question Bank</li>
+          <li>✦ Full Timed Challenge (30 Qs)</li>
+          <li>✦ Rapid Review Cheat Sheet</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="orient-grid">
+    <div class="oc" onclick="goTab(1)"><div class="oc-icon">💡</div><div class="oc-lbl">HIPAA Made Simple</div><div class="oc-desc">PHI · Confidentiality · Why it matters</div></div>
+    <div class="oc" onclick="goTab(2)"><div class="oc-icon">🔐</div><div class="oc-lbl">Privacy &amp; Security</div><div class="oc-desc">Two rules · Three safeguard types</div></div>
+    <div class="oc" onclick="goTab(3)"><div class="oc-icon">📋</div><div class="oc-lbl">Release of Info</div><div class="oc-desc">Who · What · When · How</div></div>
+    <div class="oc" onclick="goTab(4)"><div class="oc-icon">⚡</div><div class="oc-lbl">Mini Challenge</div><div class="oc-desc">Timed test · 20 Qs · Exam-style</div></div>
+  </div>
+
+  <!-- Quick Orientation Q -->
+  <div class="divider"></div>
+  <h2 class="sh">🧪 Quick Start Check-In</h2>
+  <div id="ori1" class="qblock">
+    <div class="q-meta">Orientation Q <span class="q-pts">+10 pts</span></div>
+    <div class="q-text">HIPAA stands for Health Insurance Portability and Accountability Act. Its primary purpose related to patient information is:</div>
+    <div class="q-opts">
+      <button class="q-opt" onclick="ans('ori1',0,2,'HIPAA does not determine how much insurance companies must pay. It does not set payment amounts.','')">A. To determine how much insurance companies must pay for services</button>
+      <button class="q-opt" onclick="ans('ori1',1,2,'HIPAA does not set billing codes. That is the responsibility of coding organizations like the AMA (CPT codes) and CMS (ICD-10/HCPCS).','')">B. To create standard billing codes for all medical procedures</button>
+      <button class="q-opt" onclick="ans('ori1',2,2,'✅ CORRECT! HIPAA was enacted to protect patients\' private health information (PHI) and ensure it is used and disclosed only in appropriate, permitted ways. It sets national standards for privacy, security, and confidentiality in healthcare.','HIPAA = protecting patient health information through national privacy and security standards.')">C. To protect the privacy and security of patients' health information</button>
+      <button class="q-opt" onclick="ans('ori1',3,2,'HIPAA does not govern how fast claims are processed. That relates to payer processing timelines, not HIPAA.','')">D. To ensure all insurance claims are processed within 30 days</button>
+    </div>
+    <div class="rat" id="rat-ori1"></div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 1 — HIPAA MADE SIMPLE
+══════════════════════════════════════════ -->
+<div id="tab1" class="panel">
+<div class="page">
+
+  <div class="eyebrow">Tab 2 · HIPAA Made Simple</div>
+  <h2 class="sh">💡 HIPAA — What It Is, Why It Exists</h2>
+  <p class="sp">Every concept is taught, then immediately tested. Read → Click → Learn.</p>
+
+  <div class="dir">
+    <h3>📌 What To Do</h3>
+    <ul>
+      <li>Read each concept block carefully</li>
+      <li>Answer the check-in question immediately after each concept</li>
+      <li>Click interactive cards and activities to earn bonus points</li>
+      <li><strong>Points available: up to 130 pts</strong></li>
+    </ul>
+  </div>
+
+  <!-- CONCEPT 1: What is HIPAA -->
+  <div class="teach t-sky">
+    <div class="teach-lbl">Concept 1 — What Is HIPAA?</div>
+    <h3>HIPAA = The law that protects patient health information</h3>
+    <ul>
+      <li>Enacted in <b>1996</b> — Health Insurance Portability and <b>Accountability</b> Act</li>
+      <li>Sets <b>national standards</b> for protecting patient privacy, security, and confidentiality</li>
+      <li>Applies to <b>covered entities</b>: healthcare providers, health plans, and healthcare clearinghouses</li>
+      <li>Also applies to <b>business associates</b> — companies that handle PHI on behalf of covered entities</li>
+      <li>Failure to comply = <b>civil AND criminal penalties</b></li>
+    </ul>
+  </div>
+
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Concept 1</div>
+    <div id="c1q1" class="qblock" style="background:transparent;box-shadow:none;padding:0;">
+      <div class="q-meta">Question 1 <span class="q-pts">+10 pts</span></div>
+      <div class="q-text">Which of the following is a HIPAA-covered entity?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="ans('c1q1',0,2,'A grocery store is not a covered entity. It does not provide healthcare, health insurance, or healthcare clearinghouse services.','')">A. A grocery store with a pharmacy that accepts cash only</button>
+        <button class="q-opt" onclick="ans('c1q1',1,2,'A law firm is not a covered entity under HIPAA. However, a law firm that handles PHI for a healthcare provider could be a business associate.','')">B. A law firm that handles personal injury cases</button>
+        <button class="q-opt" onclick="ans('c1q1',2,2,'✅ CORRECT! A physician\'s office is a healthcare provider — one of the three types of HIPAA covered entities. Covered entities must comply with all HIPAA Privacy and Security Rule requirements.','Covered entities: healthcare providers · health plans · healthcare clearinghouses.')">C. A physician's office that submits insurance claims electronically</button>
+        <button class="q-opt" onclick="ans('c1q1',3,2,'A fitness center is not a covered entity. It does not provide healthcare, insurance, or clearinghouse services. Trainers and wellness apps are generally not covered entities.','')">D. A fitness center that tracks members' workout data</button>
+      </div>
+      <div class="rat" id="rat-c1q1"></div>
+    </div>
+  </div>
+
+  <!-- CONCEPT 2: PHI -->
+  <div class="teach t-rose">
+    <div class="teach-lbl">Concept 2 — What Is PHI?</div>
+    <h3>PHI = Protected Health Information</h3>
+    <p>PHI is any individually identifiable health information held or transmitted by a covered entity or business associate. It includes information that:</p>
+    <ul style="margin-top:8px;">
+      <li>Relates to a person's <b>past, present, or future</b> physical or mental health condition</li>
+      <li>Relates to the <b>provision of healthcare</b> to that individual</li>
+      <li>Relates to <b>past, present, or future payment</b> for healthcare</li>
+      <li>AND can be used to <b>identify the individual</b></li>
+    </ul>
+    <p style="margin-top:8px;"><b>Key point:</b> Health information WITHOUT identifiers is NOT PHI (e.g., anonymous data in a research study).</p>
+  </div>
+
+  <!-- Interactive PHI Activity -->
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Is This PHI? Click Each Item</div>
+    <p style="font-size:.8rem;color:var(--slate);margin-bottom:10px;">Click each item to reveal whether it is PHI or not. See your result below.</p>
+    <div class="phi-grid" id="phi-grid">
+      <div class="phi-chip" onclick="checkPhi(this,'yes')" data-ans="yes">Patient name + diagnosis</div>
+      <div class="phi-chip" onclick="checkPhi(this,'yes')" data-ans="yes">Social Security Number</div>
+      <div class="phi-chip" onclick="checkPhi(this,'yes')" data-ans="yes">Medical record number</div>
+      <div class="phi-chip" onclick="checkPhi(this,'yes')" data-ans="yes">Insurance member ID</div>
+      <div class="phi-chip" onclick="checkPhi(this,'yes')" data-ans="yes">Account number</div>
+      <div class="phi-chip" onclick="checkPhi(this,'yes')" data-ans="yes">Phone number with name</div>
+      <div class="phi-chip" onclick="checkPhi(this,'yes')" data-ans="yes">Email address + chart info</div>
+      <div class="phi-chip" onclick="checkPhi(this,'no')" data-ans="no">Anonymized research data</div>
+      <div class="phi-chip" onclick="checkPhi(this,'no')" data-ans="no">Hospital's annual revenue</div>
+      <div class="phi-chip" onclick="checkPhi(this,'no')" data-ans="no">General city health stats</div>
+    </div>
+    <div class="phi-result" id="phi-result"></div>
+  </div>
+
+  <!-- CHECK-IN Q about PHI -->
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — PHI Concept</div>
+    <div id="c1q2" class="qblock" style="background:transparent;box-shadow:none;padding:0;">
+      <div class="q-meta">Question 2 <span class="q-pts">+10 pts</span></div>
+      <div class="q-text">A research study publishes findings about recovery rates from knee surgery. The data includes no patient names, dates, or identifiers of any kind. Is this PHI?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="ans('c1q2',0,1,'✅ CORRECT! De-identified data — information that contains no identifiers that could link it back to a specific individual — is NOT PHI under HIPAA. HIPAA only protects health information that can identify an individual.','No identifiers = not PHI. PHI requires BOTH health info AND the ability to identify the individual.')">A. No — data without identifiers is de-identified and is not PHI</button>
+        <button class="q-opt" onclick="ans('c1q2',1,1,'Not automatically PHI. Health information becomes PHI only when it can identify an individual. Anonymous, de-identified data does not meet that threshold.','')">B. Yes — all medical information is automatically PHI</button>
+        <button class="q-opt" onclick="ans('c1q2',2,1,'Research context does not automatically de-identify or protect data. The key factor is whether identifiers are present, not the context.','')">C. Yes — research studies always involve PHI</button>
+        <button class="q-opt" onclick="ans('c1q2',3,1,'HIPAA does apply to health information but only when identifiers are present. De-identified data falls outside HIPAA\'s PHI definition.','')">D. Yes — HIPAA protects all health data regardless of identifiers</button>
+      </div>
+      <div class="rat" id="rat-c1q2"></div>
+    </div>
+  </div>
+
+  <!-- CONCEPT 3: Confidentiality -->
+  <div class="teach t-mint">
+    <div class="teach-lbl">Concept 3 — Confidentiality</div>
+    <h3>Confidentiality = Keeping patient information private</h3>
+    <ul>
+      <li>Only those with a <b>need to know</b> (treatment, payment, operations) may access PHI</li>
+      <li>Information must not be shared with <b>unauthorized individuals</b> — including family, friends, coworkers without need</li>
+      <li>Staff must use the <b>minimum necessary</b> amount of information for the task at hand</li>
+      <li>Confidentiality applies to <b>verbal, written, and electronic</b> forms of PHI</li>
+      <li>A conversation about a patient in a public hallway = <b>confidentiality violation</b></li>
+    </ul>
+  </div>
+
+  <!-- Safe vs Unsafe Cards -->
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Safe vs Unsafe Behavior</div>
+    <div class="safe-grid">
+      <div class="safe-col col-safe">
+        <h4>✅ Safe (HIPAA-Compliant)</h4>
+        <div class="safe-item">Discussing a patient's case only with the treating physician</div>
+        <div class="safe-item">Locking the computer screen when stepping away from the desk</div>
+        <div class="safe-item">Shredding documents containing patient names and diagnoses</div>
+        <div class="safe-item">Verifying caller identity before releasing information by phone</div>
+      </div>
+      <div class="safe-col col-unsafe">
+        <h4>🚫 Unsafe (HIPAA Violation)</h4>
+        <div class="safe-item">Texting a patient's test results from a personal phone</div>
+        <div class="safe-item">Discussing a patient's condition in the waiting room</div>
+        <div class="safe-item">Leaving patient charts visible on an unattended desk</div>
+        <div class="safe-item">Sharing a patient's diagnosis with their employer without authorization</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Confidentiality</div>
+    <div id="c1q3" class="qblock" style="background:transparent;box-shadow:none;padding:0;">
+      <div class="q-meta">Question 3 <span class="q-pts">+10 pts</span></div>
+      <div class="q-text">A billing specialist is processing a claim and mentions the patient's diagnosis loudly to a coworker in the hallway where other patients can hear. This is BEST described as:</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="ans('c1q3',0,1,'✅ CORRECT! Discussing a patient\'s PHI in a public or semi-public area where unauthorized individuals can overhear is a confidentiality violation under HIPAA. Even if the conversation is work-related, PHI must be discussed in private settings only.','HIPAA requires that PHI discussions occur in private. A public hallway is not a private setting.')">A. A confidentiality violation — PHI must not be shared in public areas</button>
+        <button class="q-opt" onclick="ans('c1q3',1,1,'Not acceptable. The coworker may have a need to know, but the manner of sharing — publicly in a hallway — is the problem. PHI must be protected from unauthorized parties overhearing.','')">B. Acceptable because the coworker works in the same office</button>
+        <button class="q-opt" onclick="ans('c1q3',2,1,'The conversation is about PHI — the patient\'s diagnosis. This is covered information that must be handled privately.','')">C. Acceptable because no medical records were physically shared</button>
+        <button class="q-opt" onclick="ans('c1q3',3,1,'HIPAA does apply to verbal sharing of PHI. Spoken information about a patient\'s health is protected just as written or electronic PHI is.','')">D. Not a HIPAA concern because it was a verbal conversation</button>
+      </div>
+      <div class="rat" id="rat-c1q3"></div>
+    </div>
+  </div>
+
+  <!-- CONCEPT 4: Who must know HIPAA -->
+  <div class="teach t-plum">
+    <div class="teach-lbl">Concept 4 — Who Needs to Know HIPAA?</div>
+    <h3>Everyone who touches patient information must understand HIPAA</h3>
+    <ul>
+      <li><b>Front desk staff</b> — collect, verify, and handle patient intake information</li>
+      <li><b>Billing specialists</b> — process claims using diagnoses, insurance info, and identifiers</li>
+      <li><b>Coding specialists</b> — access medical records and documentation to assign codes</li>
+      <li><b>Records staff</b> — manage, store, and release health records</li>
+      <li><b>IT staff</b> — maintain systems that store and transmit electronic PHI</li>
+    </ul>
+    <p style="margin-top:8px;font-weight:700;">The CBCS exam tests that you understand HIPAA applies to your role as a billing/coding specialist — not just to clinicians.</p>
+  </div>
+
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Concept 4 · True or False?</div>
+    <div class="tf-grid">
+      <div class="tf-card">
+        <div class="tf-stmt">"HIPAA only applies to doctors and nurses — billing staff don't need to worry about it."</div>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="tfAns(this,'no','FALSE! HIPAA applies to ALL staff who handle PHI — including billing and coding specialists, front desk staff, records staff, and IT personnel. Anyone who accesses or handles patient information must follow HIPAA.')">✅ True</button>
+          <button class="tf-btn" onclick="tfAns(this,'no','✅ FALSE — correct! HIPAA applies to all staff who access PHI — including billing and coding specialists. The CBCS exam specifically tests HIPAA for billing and coding roles.')">❌ False</button>
+        </div>
+        <div class="tf-rev" id="tfr-0"></div>
+      </div>
+      <div class="tf-card">
+        <div class="tf-stmt">"A billing specialist who accesses a patient's record to process a claim is using PHI in a HIPAA-permitted way."</div>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="tfAns(this,'yes','✅ TRUE — correct! Accessing PHI for payment (billing/claims processing) is one of the three permitted uses/disclosures under HIPAA: Treatment, Payment, and Healthcare Operations (TPO). Billing is a payment activity.')">✅ True</button>
+          <button class="tf-btn" onclick="tfAns(this,'yes','This is TRUE. Billing is a permitted use of PHI under HIPAA\'s Treatment, Payment, and Operations (TPO) framework. The specialist does not need additional authorization to access records for billing.')">❌ False</button>
+        </div>
+        <div class="tf-rev" id="tfr-1"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPT 5: TPO -->
+  <div class="teach t-gold">
+    <div class="teach-lbl">Concept 5 — TPO: The Three Permitted Uses</div>
+    <h3>HIPAA allows PHI use for Treatment, Payment &amp; Healthcare Operations</h3>
+    <ul>
+      <li><b>Treatment</b> — sharing PHI with other providers involved in care (e.g., referral to specialist)</li>
+      <li><b>Payment</b> — using PHI to submit insurance claims, verify eligibility, obtain payment</li>
+      <li><b>Healthcare Operations</b> — quality assurance, staff training, compliance audits, administrative functions</li>
+    </ul>
+    <p style="margin-top:8px;"><b>Key rule:</b> PHI used for TPO purposes generally does NOT require a separate patient authorization. For other purposes — marketing, research, etc. — specific authorization IS needed.</p>
+  </div>
+
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — TPO</div>
+    <div id="c1q4" class="qblock" style="background:transparent;box-shadow:none;padding:0;">
+      <div class="q-meta">Question 4 <span class="q-pts">+10 pts</span></div>
+      <div class="q-text">A medical office shares a patient's PHI with a health insurance company to process a claim. Under HIPAA, this action:</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="ans('c1q4',0,0,'✅ CORRECT! Sharing PHI for the purpose of obtaining payment (submitting a claim to an insurer) falls under HIPAA\'s "Payment" category within TPO. This is a permitted disclosure and does not require a separate patient authorization.','Billing/claims = Payment under TPO. No separate authorization needed for TPO activities.')">A. Is permitted under HIPAA because it is a payment activity (part of TPO)</button>
+        <button class="q-opt" onclick="ans('c1q4',1,0,'Not required for TPO activities. Payment (claims processing) is a permitted use under HIPAA. Only non-TPO uses — like marketing or research — require separate authorization.','')">B. Requires a specific written authorization from the patient first</button>
+        <button class="q-opt" onclick="ans('c1q4',2,0,'This is explicitly permitted under HIPAA. Sharing PHI for payment is one of the three core permitted activities. It is not a violation.','')">C. Is a HIPAA violation because PHI was shared with a third party</button>
+        <button class="q-opt" onclick="ans('c1q4',3,0,'HIPAA explicitly allows PHI sharing for payment purposes. The insurer receiving the claim is processing a payment on the patient\'s behalf — this is permitted.','')">D. Is only allowed if the patient is present during the transaction</button>
+      </div>
+      <div class="rat" id="rat-c1q4"></div>
+    </div>
+  </div>
+
+  <button class="btn btn-sky" onclick="goTab(2)" style="margin-top:6px;">Continue → Privacy &amp; Security Rules ▶</button>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 2 — PRIVACY & SECURITY RULES
+══════════════════════════════════════════ -->
+<div id="tab2" class="panel">
+<div class="page">
+  <div class="eyebrow">Tab 3 · Privacy &amp; Security</div>
+  <h2 class="sh">🔐 Privacy Rule, Security Rule &amp; Safeguards</h2>
+  <p class="sp">Two big rules. Three safeguard types. Teach-then-test on every concept.</p>
+
+  <div class="dir">
+    <h3>📌 What To Do</h3>
+    <ul>
+      <li>Flip each card to reveal billing/compliance details</li>
+      <li>Sort safeguards into the correct category</li>
+      <li>Answer every check-in question before moving on</li>
+      <li><strong>Points available: up to 140 pts</strong></li>
+    </ul>
+  </div>
+
+  <!-- CONCEPT 6: Two Rules Overview -->
+  <div class="teach t-sky">
+    <div class="teach-lbl">Concept 6 — Two Rules, One Goal</div>
+    <h3>HIPAA has two main rules that billing &amp; coding staff must understand</h3>
+    <p>Think of them this way:</p>
+    <ul style="margin-top:8px;">
+      <li><b>Privacy Rule</b> = Governs <em>use and disclosure</em> of all forms of PHI (paper, verbal, electronic)</li>
+      <li><b>Security Rule</b> = Protects <em>electronic PHI (ePHI)</em> specifically through safeguards</li>
+    </ul>
+    <p style="margin-top:8px;">The Privacy Rule is the broader umbrella. The Security Rule is a more specific subset that focuses on technology and electronic systems.</p>
+  </div>
+
+  <!-- FLIP CARDS: Privacy vs Security -->
+  <div class="flip-grid">
+    <div class="flip-wrap" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-f" style="border-top:5px solid var(--sky);">
+          <div class="flip-icon">🔏</div>
+          <div class="flip-label">Privacy Rule</div>
+          <div class="flip-hint">Tap to see details →</div>
+        </div>
+        <div class="flip-b" style="background:linear-gradient(135deg,#1565C0,#0D47A1);">
+          <h4>Privacy Rule Covers:</h4>
+          <p>✔ ALL forms of PHI (paper, oral, electronic)<br><br>✔ Rules about when PHI can be USED or DISCLOSED<br><br>✔ Patient rights: access records, request amendments<br><br>✔ Minimum necessary standard</p>
+        </div>
+      </div>
+    </div>
+    <div class="flip-wrap" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-f" style="border-top:5px solid var(--plum);">
+          <div class="flip-icon">🖥️</div>
+          <div class="flip-label">Security Rule</div>
+          <div class="flip-hint">Tap to see details →</div>
+        </div>
+        <div class="flip-b" style="background:linear-gradient(135deg,#4A148C,#311B92);">
+          <h4>Security Rule Covers:</h4>
+          <p>✔ ELECTRONIC PHI (ePHI) only<br><br>✔ Administrative, Physical &amp; Technical safeguards<br><br>✔ Risk analysis and risk management<br><br>✔ Access controls, audit logs, encryption</p>
+        </div>
+      </div>
+    </div>
+    <div class="flip-wrap" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-f" style="border-top:5px solid var(--mint);">
+          <div class="flip-icon">📌</div>
+          <div class="flip-label">Key Difference</div>
+          <div class="flip-hint">Tap to see details →</div>
+        </div>
+        <div class="flip-b" style="background:linear-gradient(135deg,#00695C,#004D40);">
+          <h4>Remember This:</h4>
+          <p>Privacy Rule = ALL PHI<br><br>Security Rule = ePHI only<br><br>Both rules aim to protect patients — they just cover different forms of information and use different mechanisms.</p>
+        </div>
+      </div>
+    </div>
+    <div class="flip-wrap" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-f" style="border-top:5px solid var(--gold);">
+          <div class="flip-icon">⚠️</div>
+          <div class="flip-label">CBCS Exam Trap</div>
+          <div class="flip-hint">Tap to see trap →</div>
+        </div>
+        <div class="flip-b" style="background:linear-gradient(135deg,#E65100,#BF360C);">
+          <h4>Common Trap:</h4>
+          <p>Students confuse Privacy and Security Rules.<br><br>Remember:<br>Paper chart = Privacy Rule only<br>Electronic record = BOTH rules apply<br>Verbal conversation = Privacy Rule only</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECK-IN Q5 -->
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Privacy vs Security Rule</div>
+    <div id="c2q1" class="qblock" style="background:transparent;box-shadow:none;padding:0;">
+      <div class="q-meta">Question 5 <span class="q-pts">+10 pts</span></div>
+      <div class="q-text">A billing office stores patient records in a paper filing system. Which HIPAA rule governs the privacy of these paper records?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="ans('c2q1',0,0,'✅ CORRECT! The HIPAA Privacy Rule applies to ALL forms of PHI — including paper, oral, and electronic. The Security Rule only applies to ePHI (electronic protected health information). Paper records fall under the Privacy Rule.','Privacy Rule = ALL forms of PHI. Security Rule = electronic only.')">A. The Privacy Rule — it covers all forms of PHI including paper records</button>
+        <button class="q-opt" onclick="ans('c2q1',1,0,'The Security Rule only applies to electronic PHI (ePHI). Paper records are not electronic and therefore fall under the Privacy Rule, not the Security Rule.','')">B. The Security Rule — it applies to all patient records</button>
+        <button class="q-opt" onclick="ans('c2q1',2,0,'Both rules do NOT apply to paper records. Only the Privacy Rule applies. The Security Rule requires electronic storage to activate.','')">C. Both rules — Privacy and Security Rules both apply to paper records</button>
+        <button class="q-opt" onclick="ans('c2q1',3,0,'HIPAA does apply to paper records. Paper-based PHI is fully protected under the Privacy Rule.','')">D. Neither rule — HIPAA only governs electronic records</button>
+      </div>
+      <div class="rat" id="rat-c2q1"></div>
+    </div>
+  </div>
+
+  <!-- CONCEPT 7: Three Safeguards -->
+  <div class="teach t-plum">
+    <div class="teach-lbl">Concept 7 — The Three Security Rule Safeguard Categories</div>
+    <h3>Administrative · Physical · Technical</h3>
+    <p>The HIPAA Security Rule requires covered entities to implement three types of safeguards to protect ePHI:</p>
+    <ul style="margin-top:8px;">
+      <li><b>Administrative Safeguards</b> — Policies, procedures, training, risk assessments, workforce management</li>
+      <li><b>Physical Safeguards</b> — Locks, facility access controls, workstation security, device and media controls</li>
+      <li><b>Technical Safeguards</b> — Passwords, encryption, audit logs, automatic logoff, access controls in software</li>
+    </ul>
+    <p style="margin-top:8px;">Memory trick: <b>A</b>dmin = People &amp; Paper rules · <b>P</b>hysical = Buildings &amp; Devices · <b>T</b>echnical = Software &amp; Systems</p>
+  </div>
+
+  <!-- CONCEPT CARDS for Safeguards -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:12px 0;">
+    <div style="background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:16px;border-top:5px solid var(--sky);">
+      <div style="font-size:1.7rem;margin-bottom:6px;">📋</div>
+      <h3 style="font-size:.9rem;font-weight:800;color:var(--sky);margin-bottom:6px;">Administrative</h3>
+      <ul style="font-size:.76rem;color:var(--slate);line-height:1.65;padding-left:14px;">
+        <li>HIPAA training for all staff</li>
+        <li>Security officer designation</li>
+        <li>Risk analysis and management</li>
+        <li>Sanction policy for violations</li>
+        <li>Workforce clearance procedures</li>
+      </ul>
+    </div>
+    <div style="background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:16px;border-top:5px solid var(--mint);">
+      <div style="font-size:1.7rem;margin-bottom:6px;">🔒</div>
+      <h3 style="font-size:.9rem;font-weight:800;color:var(--mint);margin-bottom:6px;">Physical</h3>
+      <ul style="font-size:.76rem;color:var(--slate);line-height:1.65;padding-left:14px;">
+        <li>Locked server rooms</li>
+        <li>Visitor access logs</li>
+        <li>Workstation screen shields</li>
+        <li>Badge/key card access controls</li>
+        <li>Secure disposal of devices</li>
+      </ul>
+    </div>
+    <div style="background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:16px;border-top:5px solid var(--plum);">
+      <div style="font-size:1.7rem;margin-bottom:6px;">💻</div>
+      <h3 style="font-size:.9rem;font-weight:800;color:var(--plum);margin-bottom:6px;">Technical</h3>
+      <ul style="font-size:.76rem;color:var(--slate);line-height:1.65;padding-left:14px;">
+        <li>Unique user IDs &amp; passwords</li>
+        <li>Data encryption</li>
+        <li>Automatic session logoff</li>
+        <li>Audit logs / access tracking</li>
+        <li>Role-based access controls</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SORT ACTIVITY: Safeguards -->
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Sort the Safeguards</div>
+    <p style="font-size:.8rem;color:var(--slate);margin-bottom:10px;">Tap an item, then tap the correct safeguard category to place it.</p>
+    <div class="chip-pool" id="safeguard-pool">
+      <div class="chip" onclick="pickChip(this)" data-ans="admin">Annual HIPAA training</div>
+      <div class="chip" onclick="pickChip(this)" data-ans="physical">Locked server room</div>
+      <div class="chip" onclick="pickChip(this)" data-ans="tech">Password protection</div>
+      <div class="chip" onclick="pickChip(this)" data-ans="admin">Risk assessment policy</div>
+      <div class="chip" onclick="pickChip(this)" data-ans="physical">Badge access to records area</div>
+      <div class="chip" onclick="pickChip(this)" data-ans="tech">Audit logs for system access</div>
+      <div class="chip" onclick="pickChip(this)" data-ans="tech">Data encryption</div>
+      <div class="chip" onclick="pickChip(this)" data-ans="admin">Sanction policy for violations</div>
+      <div class="chip" onclick="pickChip(this)" data-ans="physical">Screen privacy shield</div>
+    </div>
+    <div class="sort-zones">
+      <div>
+        <div class="sz-lbl" style="color:var(--sky);">📋 Administrative</div>
+        <div class="sort-zone" id="zone-admin" onclick="dropChip(this,'admin')"><em style="font-size:.71rem;color:#bbb;">Tap to place</em></div>
+      </div>
+      <div>
+        <div class="sz-lbl" style="color:var(--mint);">🔒 Physical</div>
+        <div class="sort-zone" id="zone-physical" onclick="dropChip(this,'physical')"><em style="font-size:.71rem;color:#bbb;">Tap to place</em></div>
+      </div>
+      <div>
+        <div class="sz-lbl" style="color:var(--plum);">💻 Technical</div>
+        <div class="sort-zone" id="zone-tech" onclick="dropChip(this,'tech')"><em style="font-size:.71rem;color:#bbb;">Tap to place</em></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
+      <button class="btn btn-sm btn-sky" onclick="checkSafeguardSort()">✓ Check My Sort</button>
+      <div id="sort-result" style="font-size:.8rem;font-weight:700;align-self:center;"></div>
+    </div>
+  </div>
+
+  <!-- CHECK-IN Q Safeguard category -->
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Which Safeguard?</div>
+    <div id="c2q2" class="qblock" style="background:transparent;box-shadow:none;padding:0;">
+      <div class="q-meta">Question 6 <span class="q-pts">+10 pts</span></div>
+      <div class="q-text">A healthcare office requires all employees to complete an annual HIPAA training program and acknowledges that they have read and understood the office's privacy policies. This is BEST classified as a:</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="ans('c2q2',0,0,'✅ CORRECT! Annual HIPAA training and policy acknowledgment are ADMINISTRATIVE safeguards. Administrative safeguards focus on policies, procedures, workforce training, and management activities that govern the use and access of ePHI.','Annual training + policy acknowledgment = Administrative Safeguard.')">A. Administrative safeguard — training and policy management</button>
+        <button class="q-opt" onclick="ans('c2q2',1,0,'Physical safeguards address tangible, facility-based protections like locks, access cards, and workstation security. Training is not a physical safeguard.','')">B. Physical safeguard — controlling access to the facility</button>
+        <button class="q-opt" onclick="ans('c2q2',2,0,'Technical safeguards involve software and technology controls like passwords, encryption, and audit logs. Training is not a technical safeguard.','')">C. Technical safeguard — encrypting electronic records</button>
+        <button class="q-opt" onclick="ans('c2q2',3,0,'HIPAA does require training — it is classified as an administrative safeguard. Training programs are one of the most commonly tested administrative safeguard examples.','')">D. Not required by HIPAA — training is optional</button>
+      </div>
+      <div class="rat" id="rat-c2q2"></div>
+    </div>
+  </div>
+
+  <!-- CHECK-IN Q: Privacy vs Security scenario -->
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Scenario: Which Rule?</div>
+    <div id="c2q3" class="qblock" style="background:transparent;box-shadow:none;padding:0;">
+      <div class="q-meta">Question 7 <span class="q-pts">+10 pts</span></div>
+      <div class="q-text">A covered entity implements automatic logoff on all computers after 5 minutes of inactivity to prevent unauthorized access to electronic records. Which HIPAA rule is this action primarily supporting?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="ans('c2q3',0,1,'The Privacy Rule governs use and disclosure of ALL PHI. While it provides an important framework, the specific control described (automatic computer logoff) is a technical safeguard under the Security Rule, which specifically governs ePHI protection.','')">A. Privacy Rule only — it governs all patient information</button>
+        <button class="q-opt" onclick="ans('c2q3',1,1,'✅ CORRECT! Automatic session logoff is a TECHNICAL safeguard under the HIPAA Security Rule. The Security Rule specifically governs electronic PHI (ePHI) and requires technical controls like access controls, encryption, and automatic logoff to protect it.','Automatic logoff = Technical Safeguard = Security Rule.')">B. Security Rule — automatic logoff is a technical safeguard for ePHI</button>
+        <button class="q-opt" onclick="ans('c2q3',2,1,'Both rules do not apply equally here. The automatic logoff is specifically a Security Rule technical safeguard for electronic systems. The Privacy Rule applies more broadly to use and disclosure decisions.','')">C. Both Privacy and Security Rules equally</button>
+        <button class="q-opt" onclick="ans('c2q3',3,1,'Automatic logoff is specifically required by the Security Rule as a technical safeguard. It is not optional — it is part of the access control requirements for ePHI.','')">D. Neither rule — automatic logoff is optional in HIPAA</button>
+      </div>
+      <div class="rat" id="rat-c2q3"></div>
+    </div>
+  </div>
+
+  <!-- CONCEPT 8: Compliance Layer Framework -->
+  <div class="teach t-mint">
+    <div class="teach-lbl">Concept 8 — The Compliance Framework</div>
+    <h3>Four practical layers of HIPAA compliance</h3>
+    <p style="margin-bottom:8px;">HIPAA compliance is not just one rule — it works in layers. Tap each layer to expand it.</p>
+  </div>
+
+  <div class="layers">
+    <div class="layer l1" onclick="this.classList.toggle('open')">
+      <div class="layer-head">🔵 Layer 1: Protect PHI &amp; Maintain Confidentiality</div>
+      <div class="layer-desc">The foundation: patient health information is private. Only those with a legitimate need may access it. Minimum necessary applies. Unauthorized access or disclosure = violation.</div>
+    </div>
+    <div class="layer l2" onclick="this.classList.toggle('open')">
+      <div class="layer-head">🟢 Layer 2: Follow Rules for Using &amp; Disclosing PHI</div>
+      <div class="layer-desc">The Privacy Rule governs when PHI can be used or disclosed. TPO uses are permitted. Other uses generally require patient authorization. Release must be to authorized individuals only.</div>
+    </div>
+    <div class="layer l3" onclick="this.classList.toggle('open')">
+      <div class="layer-head">🟣 Layer 3: Protect ePHI Through Technical &amp; Physical Safeguards</div>
+      <div class="layer-desc">The Security Rule requires administrative, physical, and technical safeguards for electronic PHI. Risk analysis must be performed. Vulnerabilities must be identified and addressed.</div>
+    </div>
+    <div class="layer l4" onclick="this.classList.toggle('open')">
+      <div class="layer-head">🟠 Layer 4: Support Compliance Through Training, Auditing &amp; Monitoring</div>
+      <div class="layer-desc">Ongoing compliance requires workforce training, routine monitoring of access logs, regular audits, and enforcement of sanction policies when violations occur. Compliance is proactive, not just reactive.</div>
+    </div>
+  </div>
+
+  <!-- T/F on Training & Monitoring -->
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Compliance Activities · True or False?</div>
+    <div class="tf-grid">
+      <div class="tf-card">
+        <div class="tf-stmt">"Auditing access logs helps identify when employees access patient records they have no business reason to view."</div>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="tfAns(this,'yes','✅ TRUE — correct! Auditing access logs is a key compliance activity that reveals unauthorized or inappropriate access to PHI. It is a core part of HIPAA monitoring and a commonly tested concept on the CBCS exam.')">✅ True</button>
+          <button class="tf-btn" onclick="tfAns(this,'yes','This is TRUE. Access log auditing is required by HIPAA and is used to detect inappropriate access — a major form of compliance monitoring.')">❌ False</button>
+        </div>
+        <div class="tf-rev" id="tfr-2"></div>
+      </div>
+      <div class="tf-card">
+        <div class="tf-stmt">"HIPAA compliance is only needed when a breach has already occurred — there is no proactive requirement."</div>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="tfAns(this,'no','FALSE! HIPAA compliance is PROACTIVE. Covered entities must implement safeguards, conduct training, perform risk assessments, and audit systems regularly — all BEFORE any breach. Waiting for a breach is too late.')">✅ True</button>
+          <button class="tf-btn" onclick="tfAns(this,'no','✅ FALSE — correct! HIPAA requires ONGOING and PROACTIVE compliance activities including training, monitoring, auditing, and risk management. Compliance is not triggered only by breaches.')">❌ False</button>
+        </div>
+        <div class="tf-rev" id="tfr-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-sky" onclick="goTab(3)" style="margin-top:6px;">Continue → Release of Information ▶</button>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 3 — RELEASE OF INFORMATION
+══════════════════════════════════════════ -->
+<div id="tab3" class="panel">
+<div class="page">
+  <div class="eyebrow">Tab 4 · Release of Information</div>
+  <h2 class="sh">📋 Release of Information &amp; Required Documentation</h2>
+  <p class="sp">When, how, to whom, and with what documentation — every detail matters before PHI leaves the office.</p>
+
+  <div class="dir">
+    <h3>📌 What To Do</h3>
+    <ul>
+      <li>Read each concept, then answer the check-in question immediately</li>
+      <li>Complete the documentation checklist simulation</li>
+      <li>Work through the "Can This Be Released?" scenarios</li>
+      <li><strong>Points available: up to 120 pts</strong></li>
+    </ul>
+  </div>
+
+  <!-- CONCEPT 9: What is Release of Information -->
+  <div class="teach t-sky">
+    <div class="teach-lbl">Concept 9 — What Is Release of Information?</div>
+    <h3>Release of Information = sharing PHI with parties outside the organization</h3>
+    <ul>
+      <li><b>Disclosure</b> = releasing PHI to someone outside the covered entity (external release)</li>
+      <li>Before releasing PHI, the office must verify: <b>who is requesting, why, and whether required documentation is complete</b></li>
+      <li>Even family members are NOT automatically entitled to a patient's PHI</li>
+      <li>Releasing PHI to an unauthorized party = HIPAA violation, regardless of intent</li>
+      <li>The office should follow <b>both HIPAA requirements AND facility policy</b></li>
+    </ul>
+  </div>
+
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Concept 9</div>
+    <div id="c3q1" class="qblock" style="background:transparent;box-shadow:none;padding:0;">
+      <div class="q-meta">Question 8 <span class="q-pts">+10 pts</span></div>
+      <div class="q-text">A patient's adult sibling calls the billing office and asks for a copy of the patient's account statement. The patient has not signed any authorization. The billing specialist should:</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="ans('c3q1',0,2,'Not without authorization. Being a family member does not automatically grant access to another adult\'s PHI. The adult patient must have provided written authorization for the sibling to receive their records.','')">A. Provide the statement because family members are automatically authorized</button>
+        <button class="q-opt" onclick="ans('c3q1',1,2,'Verbal confirmation from the caller is not sufficient to establish authorization. The patient must have provided written authorization, or the sibling must have legal authority (e.g., power of attorney) documented on file.','')">B. Provide it if the sibling verbally confirms they are family</button>
+        <button class="q-opt" onclick="ans('c3q1',2,2,'✅ CORRECT! Adult patients\' PHI cannot be released to family members without a valid written authorization from the patient or documented legal authority (e.g., power of attorney). Being a family member does not grant automatic access under HIPAA.','HIPAA: adult patients control their own PHI. Family members need written authorization or legal authority.')">C. Decline to release and explain that written authorization from the patient is required</button>
+        <button class="q-opt" onclick="ans('c3q1',3,2,'Account statements contain PHI — they include identifiers, diagnoses (via codes), and payment information. They are not excluded from HIPAA protections.','')">D. Provide it because billing statements are not considered PHI</button>
+      </div>
+      <div class="rat" id="rat-c3q1"></div>
+    </div>
+  </div>
+
+  <!-- CONCEPT 10: Required Documentation -->
+  <div class="teach t-mint">
+    <div class="teach-lbl">Concept 10 — What Documentation Is Required?</div>
+    <h3>Before releasing PHI, verify that required documentation is complete and valid</h3>
+    <ul>
+      <li><b>Authorization form</b> — must be signed by the patient or their legal representative</li>
+      <li><b>What a valid authorization must include:</b>
+        <ul style="margin-top:5px;padding-left:14px;">
+          <li>Patient's name and identifying information</li>
+          <li>Description of the information to be released (specific, not vague)</li>
+          <li>Name of the person or organization authorized to receive it</li>
+          <li>Purpose of the disclosure</li>
+          <li>Expiration date or event</li>
+          <li>Patient's signature and date</li>
+          <li>Statement about right to revoke</li>
+        </ul>
+      </li>
+      <li>An <b>incomplete form = do not release</b> until corrected</li>
+    </ul>
+  </div>
+
+  <!-- Interactive Checklist -->
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Document Checklist Simulation</div>
+    <p style="font-size:.8rem;color:var(--slate);margin-bottom:10px;">A release form has arrived. Click each element to mark it as PRESENT (✓) or MISSING (✗). Then see if this form is ready to release.</p>
+    <div class="checklist-wrap">
+      <div class="cl-item" onclick="toggleCL(this,'present')" id="cl0">
+        <div class="cl-box">☐</div>
+        <div class="cl-text">Patient's full name and date of birth</div>
+      </div>
+      <div class="cl-item" onclick="toggleCL(this,'missing')" id="cl1">
+        <div class="cl-box">☐</div>
+        <div class="cl-text">Description of information to be released — <em style="color:var(--rose);">Left blank on this form</em></div>
+      </div>
+      <div class="cl-item" onclick="toggleCL(this,'present')" id="cl2">
+        <div class="cl-box">☐</div>
+        <div class="cl-text">Name of authorized recipient (Dr. Johnson at Mercy Clinic)</div>
+      </div>
+      <div class="cl-item" onclick="toggleCL(this,'missing')" id="cl3">
+        <div class="cl-box">☐</div>
+        <div class="cl-text">Expiration date — <em style="color:var(--rose);">Not filled in</em></div>
+      </div>
+      <div class="cl-item" onclick="toggleCL(this,'present')" id="cl4">
+        <div class="cl-box">☐</div>
+        <div class="cl-text">Patient signature (signed)</div>
+      </div>
+      <div class="cl-item" onclick="toggleCL(this,'present')" id="cl5">
+        <div class="cl-box">☐</div>
+        <div class="cl-text">Date of signature (filled in)</div>
+      </div>
+    </div>
+    <button class="btn btn-sm btn-gold" onclick="checkCL()" style="margin-top:8px;">📋 Can This Form Be Released?</button>
+    <div id="cl-result" style="font-size:.82rem;font-weight:700;margin-top:8px;padding:8px 12px;border-radius:var(--rs);display:none;"></div>
+  </div>
+
+  <!-- CHECK-IN Q -->
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Concept 10</div>
+    <div id="c3q2" class="qblock" style="background:transparent;box-shadow:none;padding:0;">
+      <div class="q-meta">Question 9 <span class="q-pts">+10 pts</span></div>
+      <div class="q-text">A release of information form is received. The form is signed by the patient but does not include an expiration date or a description of what specific information should be released. The billing specialist should:</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="ans('c3q2',0,1,'✅ CORRECT! A valid HIPAA authorization must be complete — it must include all required elements, including what information is to be released and an expiration date. An incomplete form is not a valid authorization. The office should contact the requesting party to correct the form before releasing any information.','Incomplete authorization = do not release. All required elements must be present and complete.')">A. Hold the release and contact the requester to complete the missing information</button>
+        <button class="q-opt" onclick="ans('c3q2',1,1,'The patient\'s signature alone is not enough. The authorization must include all required elements — including a description of information to be released and an expiration date. Missing elements make it invalid.','')">B. Release the records because the patient\'s signature is present</button>
+        <button class="q-opt" onclick="ans('c3q2',2,1,'The specialist should not fill in missing information themselves — that would alter a legal document. The form must be completed by the requesting party or the patient.','')">C. Fill in reasonable expiration date and release the records</button>
+        <button class="q-opt" onclick="ans('c3q2',3,1,'Processing should not proceed on an incomplete form. The facility\'s release procedure and HIPAA both require complete documentation.','')">D. Process the release because facility policy overrides HIPAA form requirements</button>
+      </div>
+      <div class="rat" id="rat-c3q2"></div>
+    </div>
+  </div>
+
+  <!-- CONCEPT 11: Authorized vs Unauthorized Release -->
+  <div class="teach t-rose">
+    <div class="teach-lbl">Concept 11 — Authorized vs Unauthorized Release</div>
+    <h3>Not everyone who asks has the right to receive PHI</h3>
+    <ul>
+      <li><b>Authorized release</b> — valid documentation is complete, recipient is identified, purpose is legitimate, patient has consented or law permits</li>
+      <li><b>Unauthorized release</b> — no signed authorization, recipient is not verified, information exceeds what was permitted, or facility policy was bypassed</li>
+      <li>Even well-intentioned releases without proper documentation = violations</li>
+      <li><b>Verify identity AND authority</b> before releasing — especially by phone, fax, or email</li>
+    </ul>
+  </div>
+
+  <!-- Scenario: Can This Be Released? -->
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — "Can This Be Released?" Scenarios</div>
+    <p style="font-size:.8rem;color:var(--slate);margin-bottom:12px;">For each scenario, click YES (can release) or NO (cannot release without more steps).</p>
+
+    <div style="display:flex;flex-direction:column;gap:10px;">
+
+      <div class="scenario" style="margin:0;">
+        <div class="sc-lbl">Scenario A</div>
+        <div class="sc-text">A physician's office calls requesting records to continue treatment of the patient currently under their care. No signed authorization is on file.</div>
+        <div style="display:flex;gap:8px;margin-top:10px;" id="sc-a">
+          <button class="btn btn-sm btn-mint" onclick="scAns('sc-a',true,'✅ YES — can release! Sharing PHI with a treating provider for treatment purposes is permitted under HIPAA\'s TPO (Treatment, Payment, Operations) framework. Treatment disclosures to other providers in the care team do not require a separate authorization.','TPO: Treatment disclosures to treating providers are permitted without separate authorization.')">✅ Yes — Release</button>
+          <button class="btn btn-sm btn-rose" onclick="scAns('sc-a',false,'Treatment disclosures to other treating providers are permitted under HIPAA\'s TPO provisions. No separate authorization is needed.','')">🚫 No — Don't Release</button>
+        </div>
+        <div id="sc-a-result" style="font-size:.78rem;margin-top:8px;"></div>
+      </div>
+
+      <div class="scenario" style="margin:0;">
+        <div class="sc-lbl">Scenario B</div>
+        <div class="sc-text">A patient's employer calls and asks for a copy of the patient's most recent lab results to "check on how they're doing."</div>
+        <div style="display:flex;gap:8px;margin-top:10px;" id="sc-b">
+          <button class="btn btn-sm btn-mint" onclick="scAns('sc-b',false,'')">✅ Yes — Release</button>
+          <button class="btn btn-sm btn-rose" onclick="scAns('sc-b',true,'✅ NO — do not release! Employers are not automatically authorized to receive employees\' PHI. Unless the patient has signed an authorization specifically permitting this disclosure to their employer, releasing it is a HIPAA violation.','Employers are not automatically authorized. Patient must sign a valid authorization for this disclosure.')">🚫 No — Don't Release</button>
+        </div>
+        <div id="sc-b-result" style="font-size:.78rem;margin-top:8px;"></div>
+      </div>
+
+      <div class="scenario" style="margin:0;">
+        <div class="sc-lbl">Scenario C</div>
+        <div class="sc-text">A valid, complete, signed release authorization is received from an attorney who represents the patient in a personal injury case. The expiration date is next month.</div>
+        <div style="display:flex;gap:8px;margin-top:10px;" id="sc-c">
+          <button class="btn btn-sm btn-mint" onclick="scAns('sc-c',true,'✅ YES — can release! The form is complete, signed by the patient, identifies the recipient (the attorney), states a purpose, and has a valid expiration date. This is a valid authorization and the records may be released as described.','Valid authorization: complete + signed + identifies recipient + purpose + expiration. All elements present.')">✅ Yes — Release</button>
+          <button class="btn btn-sm btn-rose" onclick="scAns('sc-c',false,'')">🚫 No — Don't Release</button>
+        </div>
+        <div id="sc-c-result" style="font-size:.78rem;margin-top:8px;"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CHECK-IN Q final -->
+  <div class="checkin">
+    <div class="ci-lbl">Check-In — Authorized vs Unauthorized</div>
+    <div id="c3q3" class="qblock" style="background:transparent;box-shadow:none;padding:0;">
+      <div class="q-meta">Question 10 <span class="q-pts">+10 pts</span></div>
+      <div class="q-text">A billing specialist releases a patient's records to a caller who identifies themselves as the patient's spouse. No authorization is on file. The specialist assumed the spouse was an authorized person. This is BEST described as:</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="ans('c3q3',0,2,'The specialist\'s good intentions do not override the HIPAA requirement. PHI cannot be released to spouses (or any individual) without authorization unless an exception applies. Intent does not prevent a violation.','')">A. Acceptable because the specialist acted in good faith</button>
+        <button class="q-opt" onclick="ans('c3q3',1,2,'Spouses do not automatically have rights to their partner\'s PHI under HIPAA. The patient must provide written authorization unless an explicit exception (e.g., emergency) applies.','')">B. Acceptable because spouses are automatically authorized under HIPAA</button>
+        <button class="q-opt" onclick="ans('c3q3',2,2,'✅ CORRECT! Releasing PHI to an unverified, unauthorized individual — even if they claim to be a spouse — is a HIPAA violation. Good intentions do not prevent a violation. The specialist must verify authorization BEFORE releasing any PHI.','HIPAA violations occur even with good intent. Verify authorization and identity BEFORE releasing PHI.')">C. A HIPAA violation — PHI was released without verified authorization</button>
+        <button class="q-opt" onclick="ans('c3q3',3,2,'Verbal confirmation from the caller is not verification. The specialist cannot confirm the caller\'s identity or authority based on a phone claim alone.','')">D. Acceptable because the spouse verbally confirmed their identity</button>
+      </div>
+      <div class="rat" id="rat-c3q3"></div>
+    </div>
+  </div>
+
+  <div class="mch-box">
+    <h3>⚡ Ready for the Mini Challenge?</h3>
+    <p>You've completed all three teaching tabs. Test yourself with 20 timed exam-style questions on everything you just learned.</p>
+    <button class="btn btn-sky btn-lg" onclick="goTab(4)">Start Mini Challenge →</button>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 4 — MINI CHALLENGE
+══════════════════════════════════════════ -->
+<div id="tab4" class="panel">
+<div class="page">
+  <div class="eyebrow">Part 1 · Exam Simulation</div>
+  <h2 class="sh">⚡ Mini Challenge Zone</h2>
+  <p class="sp">20 randomized questions · 40 seconds each · 10 pts per correct · Exam-style</p>
+
+  <!-- START -->
+  <div id="mch-start" style="text-align:center;padding:32px 0;">
+    <div style="font-size:4rem;margin-bottom:14px;">⚡</div>
+    <h3 style="font-size:1.25rem;font-weight:800;margin-bottom:8px;">Ready for the Challenge?</h3>
+    <p style="color:var(--slate);font-size:.86rem;margin-bottom:24px;">20 questions · 40 seconds each · 200 pts possible<br>Questions randomize each play.</p>
+    <button class="btn btn-plum btn-lg" onclick="startMCH()">🚀 Start Challenge</button>
+  </div>
+
+  <!-- ACTIVE -->
+  <div id="mch-active" style="display:none;">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+      <div style="text-align:center;">
+        <div style="font-size:3.2rem;font-weight:900;color:var(--sky);line-height:1;" id="mch-timer">40</div>
+        <div style="font-size:.7rem;color:var(--slate);">seconds</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:2rem;font-weight:900;color:var(--mint);" id="mch-score-d">0</div>
+        <div style="font-size:.7rem;color:var(--slate);">points</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:2rem;font-weight:800;color:var(--plum);" id="mch-qnum">1/20</div>
+        <div style="font-size:.7rem;color:var(--slate);">question</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:center;margin-bottom:14px;" id="mch-dots"></div>
+    <div style="background:#fff;border-radius:var(--r);box-shadow:var(--sh2);padding:22px 24px;margin-bottom:14px;">
+      <div style="font-size:.64rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--plum);margin-bottom:7px;" id="mch-cat">Category</div>
+      <div style="font-size:.95rem;font-weight:700;color:var(--ink);line-height:1.5;margin-bottom:16px;" id="mch-q">Question</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;" id="mch-opts"></div>
+      <div class="rat" id="mch-rat" style="margin-top:12px;"></div>
+    </div>
+    <button class="btn btn-sky" id="mch-next" onclick="mchNext()" style="display:none;">Next →</button>
+  </div>
+
+  <!-- RESULT -->
+  <div id="mch-result" style="display:none;text-align:center;">
+    <div style="background:#fff;border-radius:var(--rl);box-shadow:var(--sh3);padding:32px;max-width:480px;margin:0 auto;">
+      <div style="font-size:3rem;margin-bottom:10px;">🏆</div>
+      <h3 style="font-size:1.15rem;font-weight:900;margin-bottom:8px;">Challenge Complete!</h3>
+      <div style="font-size:3rem;font-weight:900;margin:14px 0;" id="mch-final-score"></div>
+      <div style="font-size:1rem;font-weight:800;margin-bottom:8px;" id="mch-grade"></div>
+      <div style="font-size:.83rem;color:var(--slate);margin-bottom:20px;" id="mch-detail"></div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn btn-plum" onclick="startMCH()">🔄 Try Again</button>
+        <button class="btn btn-rose" onclick="showMchMissed()">📋 Review Missed</button>
+        <button class="btn btn-mint" onclick="goTab(0)">🏠 Back to Start</button>
+      </div>
+    </div>
+    <div id="mch-missed-list" style="display:none;margin-top:22px;"></div>
+  </div>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <b>CBCS HIPAA &amp; Regulatory Compliance Interactive Mastery Lab — Part 1 of 2</b><br>
+  HIPAA Made Simple · Privacy &amp; Security Rules · Release of Information · Mini Challenge<br>
+  Designed and Curriculum Developed by <b>Hilary Homaii</b>
+</footer>
+
+<script>
+// ── GLOBALS ──
+let score=0,answered=0,correct=0;
+let selChip=null;
+let phiClicked=0;
+let clChecked={};
+
+// ── TABS ──
+function goTab(n){
+  document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('on',i===n));
+  document.querySelectorAll('.ntab').forEach((t,i)=>t.classList.toggle('on',i===n));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── ACCORDION ──
+function toggleAcc(id){
+  const b=document.getElementById(id),h=b.previousElementSibling;
+  const o=b.classList.contains('open');
+  b.classList.toggle('open',!o); h.classList.toggle('open',!o);
+}
+
+// ── NOTIF ──
+function notif(msg,bad){
+  const el=document.getElementById('notif');
+  el.textContent=msg; el.className='show'+(bad?' bad':'');
+  clearTimeout(el._t); el._t=setTimeout(()=>el.className='',2700);
+}
+
+// ── STATS ──
+function updateStats(){
+  document.getElementById('gScore').textContent=score;
+  document.getElementById('gCorrect').textContent=correct;
+  document.getElementById('gAcc').textContent=answered>0?Math.round(correct/answered*100)+'%':'—';
+}
+
+// ── ANSWER ──
+function ans(id,chosen,correctIdx,ratTxt,clueTxt){
+  const b=document.getElementById(id);
+  if(b.dataset.done) return;
+  b.dataset.done='1';
+  const opts=b.querySelectorAll('.q-opt');
+  const rat=document.getElementById('rat-'+id);
+  const ok=chosen===correctIdx;
+  opts.forEach((o,i)=>{o.disabled=true; if(i===correctIdx)o.classList.add('ok'); else if(i===chosen&&!ok)o.classList.add('no');});
+  answered++; if(ok){score+=10;correct++;notif('+10 pts ✓');}else notif('Review rationale ↓',true);
+  updateStats();
+  if(rat&&ratTxt){
+    rat.classList.add('show');
+    rat.innerHTML=`<div class="rat-hd ${ok?'rh-ok':'rh-no'}">${ok?'✅ Correct!':'📖 Here\'s Why...'}</div>`+
+      `<div class="rat-bd">${ratTxt}`+(clueTxt?`<div class="rat-clue">💡 ${clueTxt}</div>`:'')+'</div>';
+  }
+}
+
+// ── TRUE/FALSE ──
+const tfAnswers={'tfr-0':'no','tfr-1':'yes','tfr-2':'yes','tfr-3':'no'};
+function tfAns(btn,ans,msg){
+  const card=btn.closest('.tf-card');
+  if(card.dataset.done) return;
+  card.dataset.done='1';
+  const rev=card.querySelector('.tf-rev');
+  const correctAns=tfAnswers[rev.id];
+  const ok=(ans===correctAns);
+  card.querySelectorAll('.tf-btn').forEach(b=>b.disabled=true);
+  btn.classList.add(ok?'tf-ok':'tf-no');
+  rev.textContent=msg; rev.classList.add('show');
+  answered++; if(ok){score+=5;correct++;notif('+5 pts ✓');}else notif('Review below ↓',true);
+  updateStats();
+}
+
+// ── PHI ACTIVITY ──
+function checkPhi(el,result){
+  if(el.dataset.done) return;
+  el.dataset.done='1';
+  const correct=(el.dataset.ans===result);
+  el.classList.add(correct?(result==='yes'?'phi-yes':'phi-no'):'phi-pending');
+  if(!correct) el.classList.add('phi-pending');
+  phiClicked++;
+  score+=correct?3:0;
+  updateStats();
+  if(result==='yes') el.title='✅ PHI — contains identifier + health info';
+  else el.title='✅ Not PHI — no individual identifiers';
+
+  // Update result text
+  const done=document.querySelectorAll('#phi-grid .phi-chip[data-done="1"]').length;
+  const total=document.querySelectorAll('#phi-grid .phi-chip').length;
+  const res=document.getElementById('phi-result');
+  if(done===total) res.innerHTML='<span style="color:var(--mint);font-size:.85rem;">✅ All clicked! Items with patient identifiers = PHI. De-identified data = Not PHI.</span>';
+  else res.innerHTML=`<span style="color:var(--slate);">${done}/${total} clicked</span>`;
+}
+
+// ── CHECKLIST ──
+let clState={cl0:null,cl1:null,cl2:null,cl3:null,cl4:null,cl5:null};
+function toggleCL(el,status){
+  const id=el.id;
+  clState[id]=status;
+  el.classList.remove('checked','missing');
+  if(status==='present') el.classList.add('checked'), el.querySelector('.cl-box').textContent='✓';
+  else{el.classList.add('missing'); el.querySelector('.cl-box').textContent='✗';}
+}
+function checkCL(){
+  const all=Object.values(clState).every(v=>v!==null);
+  const res=document.getElementById('cl-result');
+  res.style.display='block';
+  // cl1 (description) and cl3 (expiration) are missing — form cannot be released
+  if(clState.cl1==='missing'||clState.cl3==='missing'){
+    res.style.background='var(--rose-l)';res.style.color='var(--rose)';res.style.border='1px solid var(--rose-m)';
+    res.innerHTML='🚫 DO NOT RELEASE — Form is incomplete. Missing: description of info to release + expiration date. An incomplete authorization is invalid under HIPAA.';
+  } else if(all){
+    res.style.background='var(--mint-l)';res.style.color='var(--mint)';res.style.border='1px solid var(--mint-m)';
+    res.innerHTML='✅ If all elements were present and complete, the form could be released.';
+  } else {
+    res.style.background='var(--gold-l)';res.style.color='var(--gold)';res.style.border='1px solid var(--gold-m)';
+    res.innerHTML='⚠️ Click all items first to evaluate the form.';
+  }
+}
+
+// ── SCENARIO BUTTONS ──
+function scAns(id,isYes,msg,clue){
+  const container=document.getElementById(id);
+  if(container.dataset.done) return;
+  container.dataset.done='1';
+  container.querySelectorAll('.btn').forEach(b=>b.disabled=true);
+  const result=document.getElementById(id+'-result');
+  if(msg){
+    result.style.color=isYes?'var(--mint)':'var(--rose)';
+    result.innerHTML=msg+(clue?`<br><small style="color:var(--sky);">💡 ${clue}</small>`:'');
+    score+=10; correct++; answered++;
+    notif('+10 pts ✓');
+  } else {
+    result.style.color='var(--rose)';
+    result.innerHTML='❌ Not quite — see correct option for explanation.';
+    answered++;
+    notif('Try again on similar questions!',true);
+  }
+  updateStats();
+}
+
+// ── SAFEGUARD SORT ──
+function pickChip(el){
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));
+  if(!el.classList.contains('chip-ok')&&!el.classList.contains('chip-no')){
+    el.classList.add('sel'); selChip=el;
+  }
+}
+function dropChip(zone,zoneId){
+  if(!selChip) return;
+  const ok=selChip.dataset.ans===zoneId;
+  selChip.classList.remove('sel');
+  if(ok){
+    selChip.classList.add('chip-ok');
+    const cl=selChip.cloneNode(true); cl.onclick=null;
+    zone.appendChild(cl);
+    selChip.style.display='none';
+    score+=5; correct++; answered++;
+    updateStats(); notif('+5 pts ✓');
+  } else {
+    selChip.classList.add('chip-no');
+    setTimeout(()=>selChip.classList.remove('chip-no'),600);
+    answered++;
+    notif('Not quite — try again!',true);
+  }
+  selChip=null;
+}
+function checkSafeguardSort(){
+  const left=document.querySelectorAll('#safeguard-pool .chip:not([style*="display: none"])');
+  const res=document.getElementById('sort-result');
+  if(left.length===0){res.innerHTML='<span style="color:var(--mint);font-weight:700;">✅ All sorted correctly!</span>';}
+  else{res.innerHTML=`<span style="color:var(--gold);">${left.length} item(s) still to place.</span>`;}
+}
+
+// ── MINI CHALLENGE ──
+const mchPool=[
+  {q:"What does PHI stand for under HIPAA?",opts:["Personal Health Identification","Protected Health Information","Private Health Instruction","Patient Health Index"],cor:1,cat:"HIPAA Basics",rat:"PHI = Protected Health Information — any individually identifiable health information held or transmitted by a covered entity."},
+  {q:"Which of the following is NOT considered PHI under HIPAA?",opts:["Patient's name + diagnosis","A hospital's annual budget report","Patient's insurance member ID","Medical record number"],cor:1,cat:"PHI",rat:"A hospital's annual budget report contains no patient identifiers. PHI requires both health information AND the ability to identify an individual."},
+  {q:"The HIPAA Privacy Rule governs:",opts:["Electronic PHI only","All forms of PHI — paper, oral, and electronic","Only digital records","Only inpatient hospital records"],cor:1,cat:"Privacy Rule",rat:"The Privacy Rule covers ALL forms of PHI, including paper, verbal, and electronic. The Security Rule is what specifically addresses electronic PHI."},
+  {q:"The HIPAA Security Rule applies specifically to:",opts:["All forms of PHI","Only oral communications","Electronic PHI (ePHI) only","Physical paper files only"],cor:2,cat:"Security Rule",rat:"The Security Rule applies specifically to ePHI — electronically created, received, maintained, or transmitted protected health information."},
+  {q:"Which of the following is an ADMINISTRATIVE safeguard?",opts:["Locking the server room","Password protection on EHR systems","Annual HIPAA staff training","Installing a privacy screen on a monitor"],cor:2,cat:"Safeguards",rat:"Annual HIPAA training is an administrative safeguard — it involves policies, procedures, and workforce management activities."},
+  {q:"Which safeguard type involves locks, key cards, and facility access controls?",opts:["Administrative","Physical","Technical","Compliance"],cor:1,cat:"Safeguards",rat:"Physical safeguards address the physical environment — locks, badge access, secure rooms, workstation placement, and device controls."},
+  {q:"Automatic session logoff on an EHR system is an example of a:",opts:["Administrative safeguard","Physical safeguard","Technical safeguard","Compliance policy"],cor:2,cat:"Safeguards",rat:"Automatic logoff is a technical safeguard — it uses software controls to prevent unauthorized access to electronic systems when a workstation is unattended."},
+  {q:"A patient's employer calls asking for the patient's lab results without a signed authorization. The office should:",opts:["Release the results — employers have a right to know","Ask the employee on the phone to confirm verbally","Decline — no valid authorization is on file","Release only basic information"],cor:2,cat:"Release of Information",rat:"Employers are not automatically authorized to receive PHI. Without a valid signed patient authorization, the records cannot be released. This would be a HIPAA violation."},
+  {q:"Which activity is permitted under HIPAA WITHOUT a separate patient authorization?",opts:["Sharing PHI with the patient's employer","Using PHI to submit an insurance claim","Selling PHI to a pharmaceutical company","Sharing PHI for marketing purposes"],cor:1,cat:"TPO",rat:"Submitting an insurance claim is a Payment activity under TPO (Treatment, Payment, Operations). TPO activities are permitted under HIPAA without a separate patient authorization."},
+  {q:"A release of information form is signed but does not include an expiration date. The billing specialist should:",opts:["Release the records — signature is sufficient","Fill in an expiration date and proceed","Hold the release until the form is corrected","Release after manager approval"],cor:2,cat:"Release of Information",rat:"A valid HIPAA authorization must include an expiration date. An incomplete form is not a valid authorization. The office must request a corrected form before releasing."},
+  {q:"Which of the following is considered a HIPAA covered entity?",opts:["A restaurant that records employee health data","A physician's office that submits electronic claims","A fitness app with no connection to a healthcare provider","A personal diary of medical symptoms"],cor:1,cat:"HIPAA Basics",rat:"A physician's office is a healthcare provider — one of three types of covered entities. The others are health plans and healthcare clearinghouses."},
+  {q:"A billing specialist tells a coworker about a patient's HIV diagnosis while standing in a crowded waiting room. This is BEST described as:",opts:["Acceptable because the coworker needs to know","A HIPAA violation — PHI discussed in a public area","Acceptable if the conversation was brief","Not a HIPAA concern because it was verbal"],cor:1,cat:"Confidentiality",rat:"Discussing PHI in a public area where unauthorized individuals can overhear is a confidentiality violation under HIPAA. PHI must be protected in all forms — including verbal."},
+  {q:"A patient requests to see their own medical records. Under HIPAA, the covered entity:",opts:["May refuse if the records contain sensitive information","Must provide access in most cases within 30 days","May deny access without explanation","Only shares records with the treating physician"],cor:1,cat:"Patient Rights",rat:"HIPAA gives patients the right to access their own medical records. Covered entities must provide access in most situations, typically within 30 days of the request."},
+  {q:"Auditing access logs in an EHR system helps the compliance officer:",opts:["Process claims faster","Identify unauthorized or inappropriate access to patient records","Train new staff on coding","Calculate patient copays"],cor:1,cat:"Auditing",rat:"Access log auditing is a key compliance monitoring activity. It reveals who accessed patient records, when, and whether the access was appropriate — detecting potential violations."},
+  {q:"A billing specialist accesses a neighbor's medical record out of curiosity. This is:",opts:["Acceptable because they work at the facility","A HIPAA violation — minimum necessary was not followed","Acceptable if they do not share the information","Not a concern if no records were printed"],cor:1,cat:"Confidentiality",rat:"Accessing PHI without a job-related reason violates HIPAA's minimum necessary standard. Even accessing a record without sharing it is a violation if there is no legitimate business reason."},
+  {q:"The 'minimum necessary' standard means:",opts:["Staff should use the minimum number of computers","Only the minimum amount of PHI needed for the task should be accessed or shared","Records should be shredded after minimum use","Patients should receive minimum information about their diagnosis"],cor:1,cat:"Privacy Rule",rat:"The minimum necessary standard requires that only the PHI needed to accomplish a specific legitimate purpose should be accessed, used, or disclosed. Accessing more than needed = violation."},
+  {q:"Which of the following statements about HIPAA training is CORRECT?",opts:["Training is only required for clinical staff","Training is optional for billing and coding staff","All workforce members who handle PHI must receive HIPAA training","Training only needs to happen once at hire"],cor:2,cat:"Training",rat:"HIPAA requires all workforce members who work with PHI to receive training. This includes billing, coding, front desk, records, and IT staff — not just clinicians. Training must also be ongoing."},
+  {q:"De-identified health data is:",opts:["Always PHI regardless of identifiers","Not PHI because it cannot identify an individual","PHI only when shared electronically","PHI only in research settings"],cor:1,cat:"PHI",rat:"De-identified data — from which all 18 HIPAA identifiers have been removed — is not PHI and does not fall under HIPAA's privacy protections. It cannot identify an individual."},
+  {q:"A covered entity shares PHI with a business associate to perform billing services. This requires:",opts:["No documentation — verbal agreement is fine","A Business Associate Agreement (BAA)","A patient authorization form","A facility policy waiver"],cor:1,cat:"HIPAA Basics",rat:"When a covered entity shares PHI with a business associate, a Business Associate Agreement (BAA) is required. It ensures the business associate agrees to protect the PHI appropriately."},
+  {q:"Which of the following is an example of an unauthorized disclosure of PHI?",opts:["Sharing records with a treating cardiologist for care purposes","Submitting a claim to Medicare for payment","Releasing records to a patient's employer without authorization","Performing a compliance audit of billing records"],cor:2,cat:"Release of Information",rat:"Releasing records to a patient's employer without written authorization is an unauthorized disclosure. Employers do not have an automatic right to receive employee PHI."},
+];
+
+let mchQs=[],mchIdx=0,mchScore=0,mchCorrect=0,mchMissed=[],mchTimer=null,mchTime=40;
+
+function startMCH(){
+  document.getElementById('mch-start').style.display='none';
+  document.getElementById('mch-result').style.display='none';
+  document.getElementById('mch-active').style.display='block';
+  mchQs=[...mchPool].sort(()=>Math.random()-.5);
+  mchIdx=0; mchScore=0; mchCorrect=0; mchMissed=[];
+  buildDots(); loadMchQ();
+}
+
+function buildDots(){
+  document.getElementById('mch-dots').innerHTML=mchQs.map((_,i)=>`<div id="dot-${i}" style="width:18px;height:7px;border-radius:4px;background:var(--bg2);"></div>`).join('');
+}
+
+function loadMchQ(){
+  const q=mchQs[mchIdx];
+  document.getElementById('mch-qnum').textContent=`${mchIdx+1}/20`;
+  document.getElementById('mch-cat').textContent=q.cat;
+  document.getElementById('mch-q').textContent=q.q;
+  document.getElementById('mch-rat').className='rat';
+  document.getElementById('mch-rat').innerHTML='';
+  document.getElementById('mch-next').style.display='none';
+
+  const optWrap=document.getElementById('mch-opts');
+  optWrap.innerHTML=q.opts.map((o,i)=>`<button style="background:var(--bg);border:2px solid var(--bg2);border-radius:var(--rs);padding:11px 13px;cursor:pointer;font-size:.82rem;font-weight:700;font-family:var(--f);transition:all .2s;text-align:center;" onmouseover="this.style.background='var(--sky-l)';this.style.borderColor='var(--sky-m)';" onmouseout="if(!this.disabled){this.style.background='var(--bg)';this.style.borderColor='var(--bg2)';}" onclick="mchAns(${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join('');
+
+  document.querySelectorAll('[id^="dot-"]').forEach((d,i)=>{
+    if(i<mchIdx) d.style.background=mchMissed.some(m=>m===mchQs[i])?'var(--rose-m)':'var(--mint-m)';
+    else if(i===mchIdx) d.style.background='var(--sky-m)';
+    else d.style.background='var(--bg2)';
+  });
+
+  clearInterval(mchTimer); mchTime=40;
+  const t=document.getElementById('mch-timer');
+  t.textContent=40; t.style.color='var(--sky)';
+  mchTimer=setInterval(()=>{
+    mchTime--;
+    t.textContent=mchTime;
+    if(mchTime<=10) t.style.color='var(--rose)';
+    if(mchTime<=0){clearInterval(mchTimer);mchAns(-1);}
+  },1000);
+}
+
+function mchAns(chosen){
+  clearInterval(mchTimer);
+  const q=mchQs[mchIdx];
+  const btns=document.getElementById('mch-opts').querySelectorAll('button');
+  btns.forEach((b,i)=>{
+    b.disabled=true;
+    b.onmouseover=null; b.onmouseout=null;
+    if(i===q.cor) b.style.background='var(--mint-l)',b.style.borderColor='var(--mint-m)',b.style.color='var(--mint)';
+    else if(i===chosen&&chosen!==q.cor) b.style.background='var(--rose-l)',b.style.borderColor='var(--rose-m)',b.style.color='var(--rose)';
+  });
+  const ok=chosen===q.cor;
+  if(ok){mchScore+=10;mchCorrect++;score+=10;correct++;}
+  else mchMissed.push(q);
+  answered++;
+  document.getElementById('mch-score-d').textContent=mchScore;
+  updateStats();
+
+  const dot=document.getElementById('dot-'+mchIdx);
+  if(dot) dot.style.background=ok?'var(--mint-m)':'var(--rose-m)';
+
+  const rat=document.getElementById('mch-rat');
+  rat.classList.add('show');
+  rat.innerHTML=`<div class="rat-hd ${ok?'rh-ok':'rh-no'}">${ok?'✅ Correct!':(chosen<0?'⏰ Time Up!':'❌ Incorrect')}</div><div class="rat-bd">${q.rat}</div>`;
+  document.getElementById('mch-next').style.display='inline-block';
+}
+
+function mchNext(){
+  mchIdx++;
+  if(mchIdx>=mchQs.length) endMCH();
+  else loadMchQ();
+}
+
+function endMCH(){
+  document.getElementById('mch-active').style.display='none';
+  document.getElementById('mch-result').style.display='block';
+  const pct=Math.round(mchCorrect/mchQs.length*100);
+  const scoreEl=document.getElementById('mch-final-score');
+  scoreEl.textContent=mchScore+' pts';
+  scoreEl.style.color=pct>=80?'var(--mint)':pct>=60?'var(--sky)':'var(--gold)';
+  let grade,gc;
+  if(pct>=90){grade='Excellent — Exam Ready! 🌟';gc='color:var(--mint)';}
+  else if(pct>=75){grade='Good Work — Review Weak Areas 📚';gc='color:var(--sky)';}
+  else{grade='Keep Studying — Retake to Build Mastery 💪';gc='color:var(--gold)';}
+  document.getElementById('mch-grade').innerHTML=`<span style="${gc}">${grade}</span>`;
+  document.getElementById('mch-detail').textContent=`${mchCorrect}/20 correct (${pct}%)`;
+}
+
+function showMchMissed(){
+  const d=document.getElementById('mch-missed-list');
+  if(!mchMissed.length){d.innerHTML='<p style="color:var(--mint);font-weight:700;text-align:center;">🎉 No missed questions!</p>';d.style.display='block';return;}
+  d.style.display='block';
+  d.innerHTML='<h3 style="color:var(--rose);font-size:.9rem;font-weight:800;margin-bottom:12px;">📋 Missed Questions — Study These</h3>'+
+    mchMissed.map(q=>`<div style="background:#fff;border-radius:var(--r);padding:14px 16px;margin-bottom:10px;border-left:4px solid var(--rose);box-shadow:var(--sh);">
+      <div style="font-size:.7rem;font-weight:800;color:var(--rose);margin-bottom:4px;">${q.cat}</div>
+      <div style="font-size:.85rem;font-weight:700;margin-bottom:7px;">${q.q}</div>
+      <div style="font-size:.78rem;background:var(--mint-l);border-radius:var(--rs);padding:6px 10px;color:var(--mint);font-weight:700;margin-bottom:5px;">✅ ${q.opts[q.cor]}</div>
+      <div style="font-size:.77rem;color:var(--slate);">${q.rat}</div>
+    </div>`).join('');
+}
+
+updateStats();
+</script>
+</body>
+</html>
